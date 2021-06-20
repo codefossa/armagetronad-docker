@@ -1,3 +1,3 @@
 #!/bin/bash
 tag="${1}"
-sudo docker build -t codefossa/armagetronad:"${tag}" -f dockerfile --no-cache --force-rm .
+sudo docker build -t codefossa/armagetronad:"${tag}" -f Dockerfile --no-cache --force-rm .
