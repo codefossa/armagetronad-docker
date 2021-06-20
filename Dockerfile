@@ -31,6 +31,7 @@ WORKDIR /app/tmp/zthread
 RUN ./configure CXXFLAGS="-fpermissive" --prefix=/usr/
 RUN make
 RUN make install
+RUN ldconfig
 
 WORKDIR /app/tmp/src
 RUN ./bootstrap.sh
