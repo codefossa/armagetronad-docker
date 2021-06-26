@@ -7,7 +7,26 @@ userconfigdir="${userdatadir}/settings"
 resourcedir="${userdatadir}/resource"
 consolelog="${vardir}/consolelog.txt"
 
+# Create user.
+if ! id "${UID}" &>/dev/null && [[ "${UID}" =~ ^[0-9]+$ ]]; then
+	echo "Creating new user: ${UID}"
+	useradd -m -u $UID tronuser
+fi
+
+user=$(id -un $UID)
+
+if [[ "${GID}" =~ ^[0-9]+$ ]]; then
+	echo "Adding user to group: ${GID}"
+	usermod -aG $GID $user
+fi
+
+# Run the arma server.
+echo "Running as user: ${user}"
+
 while true;
 do
-	$tron --resourcedir $resourcedir --userconfigdir $userconfigdir --vardir $vardir --userdatadir $userdatadir"/" > $consolelog
-done
+	sudo -u $user $tron --resourcedir $resourcedir --userconfigdir $userconfigdir --vardir $vardir --userdatadir $userdatadir"/" > $consolelog
+done &
+
+# Display the console log in container logs.
+tail -f $consolelog
