@@ -1,4 +1,4 @@
-FROM fedora:35
+FROM fedora:34
 MAINTAINER codefossa (codefossa@gmail.com)
 
 ENV UID=0
@@ -8,7 +8,7 @@ COPY ./ZThread-2.3.2 /app/tmp/zthread
 COPY ./template /app/server/server
 COPY ./start.sh /
 
-RUN dnf upgrade -y && dnf install -y \
+RUN dnf install -y \
   which \
   findutils \
   bzr \
