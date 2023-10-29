@@ -1,4 +1,4 @@
-FROM fedora:35
+FROM fedora:38
 MAINTAINER codefossa (codefossa@gmail.com)
 
 ENV UID=0
