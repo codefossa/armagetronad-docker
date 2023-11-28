@@ -8,6 +8,11 @@ resourcedir="${userdatadir}/resource"
 consolelog="${vardir}/consolelog.txt"
 input="${vardir}/input.txt"
 
+# Add additional config from environment variable.
+if [ ! -z "$CONFIG_APPEND" ]; then
+  echo $CONFIG_APPEND | sed 's/,/\n/g' >> "$userconfigdir/server_info.cfg"
+fi
+
 # Create user.
 if ! id "${UID}" &>/dev/null && [[ "${UID}" =~ ^[0-9]+$ ]]; then
 	echo "Creating new user: ${UID}"
@@ -20,6 +25,9 @@ if [[ "${GID}" =~ ^[0-9]+$ ]]; then
 	echo "Adding user to group: ${GID}"
 	usermod -aG $GID $user
 fi
+
+# Update file permissions.
+sudo chown -R $user $userdatadir
 
 # Run the arma server.
 echo "Running as user: ${user}"
