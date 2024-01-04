@@ -11,7 +11,7 @@ COPY ./start.sh /
 RUN dnf install -y \
   which \
   findutils \
-  bzr \
+  git \
   automake \
   bison \
   g++ \
@@ -28,7 +28,7 @@ RUN dnf install -y \
   php-curl
 
 RUN mkdir -p /app/tmp
-RUN bzr branch lp:~armagetronad-ap/armagetronad/0.2.9-armagetronad-sty+ct+ap /app/tmp/src
+RUN git clone --depth 1 -b hack-0.2.8-sty+ct+ap https://github.com/ArmagetronAd/armagetronad.git /app/tmp/src
 
 WORKDIR /app/tmp/zthread
 RUN ./configure CXXFLAGS="-fpermissive" --prefix=/usr/
